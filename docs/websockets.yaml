@@ -1,0 +1,55 @@
+asyncapi: 3.0.0
+info:
+  title: Sandbox websockets API  
+  version: 1.0.0
+  description: >-
+    This API allows clients to start websocket connections and receive events.
+servers:
+  production:
+    host: scores.example.com
+    protocol: wss
+  localhost:
+    host: localhost:3001
+    protocol: ws
+channels:
+  sendTop100Scores:
+    address: sendTop100Scores
+    description: Sends the top 100 players to the connected clients
+operations:
+  sendTop100Scores:
+    action: send
+    channel:
+      $ref: '#/channels/sendTop100Scores'
+components:
+  messages:
+    top100Scores:
+      name: top100Scores
+      title: Top 100 Scores
+      summary: A message containing the top 100 scores.
+      contentType: application/json
+      payload:
+        type: object
+        properties:
+          scores:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: string
+                  description: Unique identifier for the score entry.
+                rank:
+                  type: integer
+                  format: number
+                  description: The rank of the score.
+                score:
+                  type: number
+                  format: number
+                  description: The actual score.
+                created_at:
+                  type: string
+                  format: date-time
+                  description: The timestamp when the score was created.
+                player_name:
+                  type: string
+                  description: The name of the player who achieved the score.

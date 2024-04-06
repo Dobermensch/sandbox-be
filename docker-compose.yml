@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  app:
+    image: node:18-slim
+    container_name: fastify_app
+    environment:
+      - DATABASE_USERNAME=postgres
+      - DATABASE_HOST=postgres
+      - DATABASE_PASSWORD=123456
+      - DATABASE_NAME=sandbox
+      - DATABASE_PORT=5432
+    volumes:
+      - ./:/usr/src/app
+    working_dir: /usr/src/app
+    command: sh -c "yarn && yarn dev"
+    ports:
+      - '3001:3001'
+    depends_on:
+      - postgres
+    networks:
+      - app-network
+
+  postgres:
+    image: postgres:16
+    container_name: pg_database
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DB=sandbox
+    volumes:
+      - postgres_data:/var/lib/postgresql/data 
+    ports:
+      - '5432:5432'
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  postgres_data:

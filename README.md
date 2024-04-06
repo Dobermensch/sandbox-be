@@ -1,8 +1,8 @@
 # Sandbox take home test - backend
 ## Local installation order
 1. This Backend repo
-2. Leaderboard frontend
-3. Game repo
+2. Leaderboard frontend: https://github.com/Dobermensch/sandbox-fe
+3. Game repo: https://github.com/Dobermensch/sandbox-game
 
 ## Setup
 1. cd to this project directory
